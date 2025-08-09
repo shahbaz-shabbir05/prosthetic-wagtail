@@ -1,0 +1,20 @@
+{% extends "website/home_page.html" %}
+{% load wagtailcore_tags wagtailimages_tags static %}
+{% block content %}
+  {% include "blocks/page_header.html" %}
+  <div class="space-y-16 bg-taskabackgroundgrey px-8 lg:px-24">
+    <div class="flex justify-center">
+      <div
+        class="flex h-full max-w-screen-2xl flex-col overflow-hidden rounded-3xl md:grid md:grid-cols-2 md:gap-4 md:space-y-0"
+      >
+        {% for child in page.get_children.specific.live %}
+          {% if forloop.first %}
+            {% include "blog/blog_overview_header.html" %}
+          {% else %}
+            {% include "blog/blog_overview_entry.html" %}
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endblock content %}

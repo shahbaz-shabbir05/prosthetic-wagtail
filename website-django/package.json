@@ -1,0 +1,22 @@
+{
+  "name": "website-django",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "watch": "npm run tailwind && npx --yes onchange -p 100 \"/app/theme/src/*.css\" \"/app/apps/**/templates/**/*.html\" -- npm run tailwind",
+    "minify": "node bin/minify.mjs",
+    "tailwind": "npx --yes @tailwindcss/cli -m -i /app/theme/src/theme.css -o /app/website_django/static/css/taska.css",
+    "prettier": "npx --yes prettier --ignore-path=.prettierignore --write /app/build"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "commander": "^13.1.0",
+    "html-minifier-terser": "^7.2.0",
+    "prettier": "^3.5.3",
+    "prettier-plugin-jinja-template": "^2.0.0",
+    "prettier-plugin-tailwindcss": "^0.6.11",
+    "tailwindcss": "^4.0.9"
+  }
+}

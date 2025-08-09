@@ -1,0 +1,8 @@
+<div>
+  <p class="font-buch">{{ value.title }}</p>
+  {% for link in value.links %}
+    <div class="pt-2">
+      <a href="{{ link.url }}">{{ link.title }}</a>
+    </div>
+  {% endfor %}
+</div>

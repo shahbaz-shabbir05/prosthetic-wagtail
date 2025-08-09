@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags wagtailimages_tags static %}
+{% block header %}
+  {% include "layout/header.html" %}
+{% endblock header %}
+{% block content %}
+  {% for blk in page.content %}
+    {% include_block blk %}
+  {% endfor %}
+{% endblock content %}
+{% block footer %}
+  {% include "layout/call_to_action.html" %}
+  {% include "layout/footer.html" %}
+{% endblock footer %}
+<!-- 
+  Okay - hear me out. Tailwind will only compile css defined in tailwind.config.js if it is
+  used in the code. Because we interpolate (e.g. `bg-${cardColor}`) throughout the app,
+  they will not get compiled if the color is not hardcoded elsewhere. Adding a list of
+  comments with our custom colors will ensure they are compiled and can be used throughout
+  the app. 
+  TODO #75
+
+  Make sure you add the new custom color for both bg- and text-
+
+  bg-taskablack
+  bg-taskablue
+  bg-taskacoolgrey
+  bg-taskadarkblue
+  bg-taskagrey
+  bg-taskabackgroundgrey
+  bg-taskaultralightgrey
+  bg-taskared
+  bg-taskacharcoal
+  bg-taskawheat
+  bg-taskapink
+  bg-black
+  bg-white
+  bg-taskavine
+  bg-taskasand
+  bg-taskabloom
+  bg-duskie
+  bg-greycover
+  bg-whiter
+  bg-aqua
+  bg-charbrown
+  bg-racing
+  bg-seventycx
+  bg-g2
+  bg-g2blk
+  
+  text-taskablack
+  text-taskablue
+  text-taskacoolgrey
+  text-taskadarkblue
+  text-taskagrey
+  text-taskabackgroundgrey
+  text-taskaultralightgrey
+  text-taskared
+  text-taskacharcoal
+  text-taskawheat
+  text-taskapink
+  text-black
+  text-white
+  text-aqua
+  text-charbrown
+  text-racing
+  text-seventycx
+  text-g2
+  text-g2blk
+
+  border-taskablack
+  border-taskablue
+  border-taskacoolgrey
+  border-taskadarkblue
+  border-taskagrey
+  border-taskabackgroundgrey
+  border-taskaultralightgrey
+  border-taskared
+  border-taskacharcoal
+  border-taskawheat
+  border-taskapink
+  border-black
+  border-white
+  border-aqua
+  border-charbrown
+  border-racing
+  border-seventycx
+  border-g2
+  border-g2blk
+
+  font-bold 
+  text-taskalink
+  hover:underline
+  transition-colors
+  duration-500
+  decoration-transparent
+  hover:decoration-taskalink
+-->

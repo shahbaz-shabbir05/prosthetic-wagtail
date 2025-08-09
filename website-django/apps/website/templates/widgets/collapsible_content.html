@@ -1,0 +1,55 @@
+<div class="space-y-4 py-4" x-data="{ open: false }">
+  <button @click="open = !open" class="flex w-full items-center justify-between text-left m-0">
+    <h4
+      class="font-leicht"
+    >
+      {{ value.title }}
+    </h4>
+    <div name="rotate" class="shrink-0">
+      <svg
+        x-cloak
+        x-show="open"
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        strokeWidth="1"
+        x-transition:enter="rotate-enter-active"
+        x-transition:leave="rotate-leave-active"
+        x-transition:enter-start="rotate-enter-from"
+        x-transition:leave-end="rotate-leave-to"
+      >
+        <path strokeLinecap="round" strokeLinejoin="round" d="M20 12H4" />
+      </svg>
+      <svg
+        x-show="!open"
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        strokeWidth="1"
+        x-transition:enter="rotate-enter-active"
+        x-transition:leave="rotate-leave-active"
+        x-transition:enter-start="rotate-enter-from"
+        x-transition:leave-end="rotate-leave-to"
+      >
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+      </svg>
+    </div>
+  </button>
+  <div name="expand" mode="out-in">
+    <div
+      x-cloak
+      x-show="open"
+      class="text-center md:text-left"
+      x-transition:enter="expand-enter-active"
+      x-transition:leave="expand-leave-active"
+      x-transition:enter-start="expand-enter-from"
+      x-transition:leave-end="expand-leave-to"
+    >
+      {{ value.text }}
+    </div>
+  </div>
+</div>

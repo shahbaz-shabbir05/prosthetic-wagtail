@@ -1,0 +1,18 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+<div class="flex flex-col-reverse px-8 py-16 md:flex-row lg:px-24 w-full">
+    <div class="flex flex-col items-end justify-center gap-8 p-8 md:w-1/2 md:p-0 md:py-24 md:pl-24">
+        <div class="flex w-full max-w-screen-md flex-col text-center md:pr-8 md:text-left">
+            <div>{{ value.text|richtext }}</div>
+            <div class="mt-8" >{% include_block value.button %}</div>
+        </div>
+    </div>
+    <div class="relative flex gap-4 md:w-1/2 md:gap-8">
+        {% for image in value.images %}
+            <img src="{{ image.file.url }}"
+                 width="{{ image.width }}"
+                 height="{{ image.height }}"
+                 alt="alt"
+                 class="aspect-square min-w-0 self-center rounded-lg" />
+        {% endfor %}
+    </div>
+</div>

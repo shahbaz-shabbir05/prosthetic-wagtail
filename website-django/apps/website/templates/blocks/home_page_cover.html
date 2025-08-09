@@ -1,0 +1,29 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+<div class="relative md:h-[650px] 2xl:h-[730px]">
+  <img src="{{ value.image.file.url }}"
+       id="coverImage"
+       width="{{ value.image.width }}"
+       height="{{ value.image.height }}"
+       alt="alt"
+       class="left-0 top-0 -z-10 h-[285px] w-full object-cover md:absolute md:h-[650px] 2xl:h-[730px]" />
+  <div class="h-[285px] p-8 md:h-full md:p-24">
+    <div class="flex h-full grid-cols-2 flex-col justify-center md:grid">
+      <div class="col-start-2 max-w-screen-md text-center text-black md:text-right text-{{ value.text_color }}">
+        <div class="mb-8">{{ value.text|richtext }}</div>
+        {% include_block value.button %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% block extra_js %}
+<script>
+const image = document.getElementById("coverImage");
+const handleWindowSizeChange = () => {
+  image.setAttribute("height", window.innerWidth >= 768
+      ? {{ value.image.height }}
+      : {{ value.image.width }});
+};
+window.addEventListener('resize', handleWindowSizeChange);
+</script>
+{% endblock extra_js %}

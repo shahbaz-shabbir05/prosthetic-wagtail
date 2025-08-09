@@ -1,0 +1,19 @@
+{% load wagtailcore_tags %}
+<div
+  class="bg-{{ value.bg_color }} flex flex-col justify-center items-center p-8 my-4 lg:p-0 gap-6 rounded-3xl overflow-hidden text-white lg:h-96 xl:h-[600px] lg:w-[600px] xl:w-[900px]"
+>
+  <img
+    src="{{ value.image.file.url }}"
+    alt="foo"
+    width="160"
+    height="160"
+    class="h-40 w-40 object-scale-down xl:h-80 xl:w-80"
+  />
+
+  <div class="flex items-center">
+    <h5>{{ value.title }}</h5>
+  </div>
+  <p>{{ value.description }}</p>
+
+  {% include_block value.button %}
+</div>

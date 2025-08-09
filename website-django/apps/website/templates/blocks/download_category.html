@@ -1,0 +1,17 @@
+{% load taska_tags wagtailcore_tags %}
+
+<div
+  class="h-full w-full rounded-xl bg-taskabackgroundgrey px-12 py-6"
+  x-show="showForCategories(userCategory, {{ value | download_user_categories }}) && showForCategories(fileCategory, {{ value | download_file_categories }})"
+>
+  <p class="h2">{{ value.title }}</p>
+
+  <ul
+    class="taska-divider-bottom"
+    x-on:filterupdate="console.log($el); if (visible_children($el) > 1) { $el.classList.add('taska-divider-bottom') } else { $el.classList.remove('taska-divider-bottom') }"
+  >
+    {% for download in value.downloads %}
+      {% include_block download %}
+    {% endfor %}
+  </ul>
+</div>

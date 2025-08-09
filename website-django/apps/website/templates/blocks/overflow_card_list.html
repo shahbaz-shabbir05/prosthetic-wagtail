@@ -1,0 +1,20 @@
+{% load wagtailcore_tags %}
+<div class="bg-{{ value.bg_color }} text-{{ value.text_color }}">
+  <div class="mx-8 flex justify-center py-8 md:mx-24 md:py-16">
+    <div class="w-full max-w-screen-2xl text-center">
+      <h1>{{ value.title }}</h1>
+    </div>
+  </div>
+
+  <div
+    class="no-scrollbar flex overflow-auto overflow-y-auto pr-8 md:flex-col md:gap-8 md:overflow-visible md:pr-0"
+  >
+    {% for crd in value.cards %}
+      {% include_block crd %}
+    {% endfor %}
+  </div>
+
+  <div
+    class="mx-8 flex justify-center pb-16 pt-4 text-taskagrey md:mx-24"
+  ></div>
+</div>

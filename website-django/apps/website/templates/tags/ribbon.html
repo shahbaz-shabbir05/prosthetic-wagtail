@@ -1,0 +1,29 @@
+{% block extrastyle %}
+
+<style type="text/css">
+.ribbon {
+  font-size: 1.2rem;
+  color: #fff;
+}
+.ribbon {
+  position: fixed;
+  bottom: 25px;
+  left: 0px;
+  z-index: 999;
+  width: 150px;
+  --r: .8em; /* control the cutout */
+  border-block: .5em solid #0000;
+  padding-inline: .5em calc(var(--r) + .25em);
+  line-height: 1.8;
+  clip-path: polygon(100% 0,0 0,0 100%,100% 100%,calc(100% - var(--r)) calc(100% - .25em),100% 50%,calc(100% - var(--r)) .25em);
+  background:
+   radial-gradient(.2em 50% at left,#000a,#0000) border-box,
+   {{ color }} padding-box; /* the color  */
+}
+    
+</style>
+{% endblock extrastyle %}
+
+{% block content %}
+<div class="ribbon">{{ text }}</div>
+{% endblock content %}

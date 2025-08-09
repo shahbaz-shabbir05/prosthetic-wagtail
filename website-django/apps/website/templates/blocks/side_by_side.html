@@ -1,0 +1,22 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+<div
+  class="bg-{{ value.bg_color }} text-{{ value.text_color }} flex flex-col items-center p-8 md:p-24"
+>
+  <div class="flex w-full flex-col items-center gap-7 md:flex-row md:gap-0">
+    <div class="hidden w-1/2 flex-col items-end md:flex">
+      <div
+        class="flex w-full max-w-screen-md flex-col items-center justify-end gap-7 pr-24 md:flex-row md:gap-0"
+      >
+        <div>{{ value.text|richtext }}</div>
+      </div>
+    </div>
+    <div class="flex w-1/2 justify-center">
+      {% image value.image width-1522 class="object-contain min-h-[12rem] md:min-h-[24rem] 2xl:min-h-[28rem] w-[14rem] md:w-[20rem] 2xl:w-[24rem]" %}
+    </div>
+    {% include_block value.button %}
+  </div>
+  {% if value.scroll_button %}
+    {% include_block value.scroll_button %}
+  {% endif %}
+</div>

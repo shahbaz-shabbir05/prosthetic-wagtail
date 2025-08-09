@@ -1,0 +1,33 @@
+{% load static %}
+
+<div class="hidden md:mx-24 md:block 2xl:flex 2xl:justify-center">
+  <div
+    class="{% if not value.image_pop_out %}overflow-hidden{% endif %} {% if value.image_on_right %}
+      flex-row-reverse text-left
+    {% else %}
+      text-right
+    {% endif %} bg-{{ value.bg_color }} text-{{ value.text_color }} relative flex h-60 w-full max-w-screen-2xl items-center rounded-3xl lg:h-72 xl:h-80"
+  >
+    <div
+      class="{% if value.image_on_right %}flex justify-end{% endif %} absolute bottom-0 w-2/3"
+    >
+      <img
+        src="{{ value.image.file.url }}"
+        alt=""
+        height="{{ value.image.height }}"
+        width="{{ value.image.width }}"
+        class="{% if value.image_pop_out %}
+          h-[17rem] md:h-[18rem] lg:h-[20rem] xl:h-[23rem]
+        {% else %}
+          h-60 lg:h-72 xl:h-80
+        {% endif %} max-w-max object-cover"
+      />
+    </div>
+    <div
+      class="{% if value.image_on_right %}left-16{% else %}right-16{% endif %} absolute w-1/3"
+    >
+      <p class="h6 pb-2 normal-case tracking-normal">{{ value.title }}</p>
+      <p>{{ value.description }}</p>
+    </div>
+  </div>
+</div>

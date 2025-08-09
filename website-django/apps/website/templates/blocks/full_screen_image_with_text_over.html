@@ -1,0 +1,52 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+<div
+  class="flex h-full w-full flex-col justify-center lg:block"
+>
+  <div class="{% if value.fade_image %}blend{% endif %} relative">
+    <!-- desktop img below -->
+    <img
+      src="{{ value.image.file.url }}"
+      width="{{ value.image.width }}"
+      height="{{ value.image.height }}"
+      alt="alt"
+      class="{% if value.fade_image %}transform{% endif %} hidden max-h-[100vh] min-h-[32rem] w-full object-cover lg:block min-[2148px]:max-h-[50vh]"
+    />
+
+    <!-- mobile img below -->
+
+    <img
+      src="{{ value.image.file.url }}"
+      width="{{ value.image.width }}"
+      height="{{ value.image.height }}"
+      alt="alt"
+      class="{% if value.fade_image %}transform{% endif %} block max-h-[100vh] w-full object-cover lg:hidden"
+    />
+
+    <div
+      class="{% if not value.text_on_left %}lg:justify-end{% endif %} lg:absolute lg:inset-0 lg:flex"
+    >
+      <div
+        class="{% if value.text_on_left %}
+          lg:justify-end justify-center lg:text-left
+        {% else %}
+          lg:justify-start justify-center lg:text-right lg:mr-24
+        {% endif %} {% if value.cards|length != 0 %}2xl:mb-72{% else %}2xl:mb-36{% endif %} flex w-full p-8 text-center lg:w-1/2 lg:p-0 lg:py-24 lg:pl-24 lg:text-left 2xl:items-center"
+      >
+        <div
+          class="w-full max-w-screen-md lg:bg-transparent flex flex-col gap-12"
+        >
+          <div class="h1">{{ value.heading|linebreaksbr }}</div>
+          {{ value.text|richtext }}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% if value.cards|length != 0 %}
+    <div class="m-4 justify-center gap-4 lg:flex">
+      {% for card in value.cards %}
+          {% include_block card %}
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>

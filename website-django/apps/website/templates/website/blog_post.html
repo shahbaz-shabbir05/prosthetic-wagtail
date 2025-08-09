@@ -1,0 +1,18 @@
+{% extends "website/home_page.html" %}
+{% load wagtailcore_tags wagtailimages_tags static %}
+{% block content %}
+  {% include "blocks/page_header.html" %}
+  <div class="flex flex-col items-center md:mx-24">
+    <div class="flex w-full max-w-screen-2xl flex-col text-center md:text-left">
+      {% for blk in page.content %}
+        <div class="flex max-w-screen-2xl flex-col space-y-3 text-center md:text-left">
+          {% include_block blk %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  <script>
+    const date=new Date("{{ page.date|date:"c" }}");
+    document.getElementById("dateDisplay").innerHTML = date.toLocaleDateString();
+  </script>
+{% endblock content %}

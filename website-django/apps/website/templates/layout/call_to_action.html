@@ -1,0 +1,29 @@
+{% load static i18n wagtailcore_tags taska_tags %}
+{% get_call_to_action as call_to_action %}
+
+<div
+  {% if page.overlap_call_to_action %}
+    class="lg:-mt-48 pb-56 lg:pb-48 2xl:flex 2xl:justify-center"
+  {% else %}
+    class="pb-56 lg:pb-48 2xl:flex 2xl:justify-center"
+  {% endif %}
+>
+  <div
+    class="absolute left-0 mx-8 mt-8 max-w-screen-2xl overflow-hidden rounded-3xl bg-white lg:mx-24 lg:mt-12 lg:grid lg:grid-cols-3 lg:shadow-taska xl:right-auto xl:left-auto"
+  >
+    <div>
+      <img
+        src="{{ call_to_action.image.file.url }}"
+        width="{{ call_to_action.image.width }}"
+        height="{{ call_to_action.image.height }}"
+        alt="alt"
+        class="h-48 w-full object-cover lg:h-full"
+      />
+    </div>
+    <div
+      class="call-to-action flex flex-col p-6 text-center lg:col-span-2 lg:text-left"
+    >
+      {{ call_to_action.content|richtext }}
+    </div>
+  </div>
+</div>

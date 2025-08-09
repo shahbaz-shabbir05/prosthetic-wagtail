@@ -1,0 +1,30 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+<div class="flex flex-col md:flex-row">
+    {% if page.header_options <= 1 %}
+        <div class="bg-taskacharcoal text-white items-end md:pl-24 flex flex-col justify-center gap-8 p-8 md:w-1/2 md:p-0 md:py-24">
+            <div class="md:pr-24 flex w-full max-w-screen-md flex-col text-center md:text-left">
+                {% if page.header_options == 1 %}
+                    {% include "blocks/page_header/quote.html" %}
+                {% else %}
+                    {% include "blocks/page_header/title.html" %}
+                {% endif %}
+            </div>
+        </div>
+        <div class="flex md:w-1/2">{% include "blocks/page_header/image.html" %}</div>
+    {% else %}
+        {% include "blocks/page_header/image.html" %}
+    {% endif %}
+</div>
+
+<div class="{% if page.header_options == 0 %}mb-8{% endif %}"></div>
+
+{% if page.header_options >= 1 %}
+<div class="m-8 flex flex-col items-center md:mx-24 mt-12">
+    <div class="flex w-full max-w-screen-2xl flex-col text-center md:text-left">
+        <p>
+            <small class="text-gray-500 dark:text-gray-400" id="dateDisplay"></small>
+          </p>
+    {% include "blocks/page_header/title.html" %}
+    </div>
+</div>
+{% endif %}

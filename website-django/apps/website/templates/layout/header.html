@@ -1,0 +1,50 @@
+{% load static taska_tags %}
+{% get_header_nav as header_nav %}
+
+<nav class="sticky top-0 z-50 h-14 bg-white pt-4 text-taskablack">
+  <div class="px-6">
+    <div class="flex items-center justify-between gap-x-12">
+      <a href="/">
+        <img
+          src="{% static 'img/black-text-logo.svg' %}"
+          alt="TASKA Logo"
+          class="h-8 w-32"
+          width="245"
+          height="43"
+        />
+      </a>
+      <div class="hidden space-x-8 pl-40 lg:flex">
+        {% for block in header_nav.central_nav %}
+          <div
+            class="flex-none text-center hover:cursor-pointer"
+            x-data="{ open: false }"
+            @mouseenter="open = true"
+            @mouseleave="open = false"
+          >
+            {{ block.value.title }}
+            <div class="absolute z-50" x-cloak x-show="open">
+              {% include "layout/header_widgets/nav_block.html" with items=block.value.links %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+      <div class="hidden space-x-8 lg:flex">
+        {% for block in header_nav.right_hand_nav %}
+          <div
+            class="text-center hover:cursor-pointer"
+            x-data="{ open: false }"
+            @mouseenter="open = true"
+            @mouseleave="open = false"
+          >
+            {{ block.value.title }}
+            <div class="absolute z-50" x-cloak x-show="open">
+              {% include "layout/header_widgets/nav_block.html" with items=block.value.links %}
+            </div>
+          </div>
+        {% endfor %}
+        {% include "layout/header_widgets/language_picker.html" %}
+      </div>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,49 @@
+<div class="w-full rounded-xl bg-taskabackgroundgrey p-6">
+  <p class="mb-4 text-xs text-taskablack uppercase">Filter</p>
+
+  <div class="w-full space-y-4">
+    <div class="flex rounded-3xl bg-white md:flex-col lg:flex-row">
+      <button
+        class="m-0.5 w-full rounded-3xl px-4 py-2"
+        :class="userCategory === 'user' ? 'bg-black text-white' :  ''"
+        @click="userCategory = 'user'; $dispatch('filterupdate')"
+      >
+        Users
+      </button>
+      <button
+        class="m-0.5 w-full rounded-3xl px-4 py-2"
+        :class="userCategory === 'clinician' ? 'bg-black text-white' :  ''"
+        @click="userCategory = 'clinician'; $dispatch('filterupdate')"
+      >
+        Clinicians
+      </button>
+    </div>
+
+    <div>
+      <select
+        class="w-full rounded-3xl bg-white p-2"
+        @change='fileCategory = $event.target.value; $dispatch("filterupdate")'
+      >
+        <option disabled x-show="false" :selected="fileCategory===null">
+          Item type
+        </option>
+        <option value="document" :selected="fileCategory==='document'">
+          Document
+        </option>
+        <option value="video" :selected="fileCategory==='video'">Video</option>
+      </select>
+    </div>
+
+    <div>
+      <button
+        class="m-0.5 rounded-3xl bg-black px-4 py-2 text-sm text-white"
+        x-show="fileCategory !== null || userCategory !== 'user'"
+        @click="userCategory='user'; fileCategory=null"
+      >
+        X Clear filters
+      </button>
+    </div>
+
+    <p>Can't find what you're looking for? <b>Get in touch here.</b></p>
+  </div>
+</div>

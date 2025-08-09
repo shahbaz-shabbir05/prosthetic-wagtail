@@ -1,0 +1,13 @@
+<div class="mt-4 rounded-3xl bg-white p-2 px-4 text-black shadow-taska">
+  <ul class="space-y-2 text-left ml-0!">
+    {% for item in items %}
+      <li
+        class="flex flex-col justify-center rounded-3xl hover:cursor-pointer hover:font-bold"
+      >
+        <div class="justify-left flex">
+          <a href="{{ item.url }}">{{ item.title }}</a>
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+</div>

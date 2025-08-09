@@ -1,0 +1,109 @@
+{
+    "containerDefinitions": [
+        {
+            "name": "main",
+            "image": "{{ .image }}",
+            "command": [
+                "./manage.py",
+                "rqworker"
+            ],
+            "memoryReservation": 200,
+            "essential": true,
+            "environment": [
+                {
+                    "name": "DB_PORT",
+                    "value": "5432"
+                },
+                {
+                    "name": "DB_USER",
+                    "value": "website-django-prod"
+                },
+                {
+                    "name": "DB_NAME",
+                    "value": "website-django-prod"
+                },
+                {
+                    "name": "DB_HOST",
+                    "value": "shared.cluster-caqci7oeqxd9.eu-central-1.rds.amazonaws.com"
+                },
+                {
+                    "name": "DEBUG",
+                    "value": "False"
+                },
+                {
+                    "name": "ALLOWED_HOSTS",
+                    "value": "*"
+                },
+                {
+                    "name": "RQ_REDIS_HOST",
+                    "value": "shared.fpkmia.0001.euc1.cache.amazonaws.com"
+                },
+                {
+                    "name": "REDIS_CACHE",
+                    "value": "redis://shared.fpkmia.0001.euc1.cache.amazonaws.com:6379"
+                },
+                {
+                    "name": "SENTRY_DSN",
+                    "value": "https://e87bdc3785098c81e14f0a3266ee6a06@o1006419.ingest.us.sentry.io/4508922871611392"
+                },
+                {
+                    "name": "SENTRY_ENVIRONMENT",
+                    "value": "prod"
+                },
+                {
+                    "name": "DJANGO_SETTINGS_MODULE",
+                    "value": "website_django.settings.worker"
+                },
+                {
+                    "name": "BUNNYCDN_PUBLIC_HOST",
+                    "value": "https://static-djcms.taska.nz"
+                }
+            ],
+            "secrets": [
+                {
+                    "name": "DB_PASSWORD",
+                    "valueFrom": "arn:aws:secretsmanager:eu-central-1:846818632671:secret:website-django/prod/rds-Jp8eOZ"
+                },
+                {
+                    "name": "DJANGO_CONFIG",
+                    "valueFrom": "arn:aws:secretsmanager:eu-central-1:846818632671:secret:website-django/prod/worker_config-fD4kRP"
+                }
+            ],
+            "logConfiguration": {
+              "logDriver": "awslogs",
+              "options": {
+                "awslogs-group": "website-django-worker-prod",
+                "awslogs-region": "eu-central-1",
+                "awslogs-stream-prefix": "website-django-worker-prod"
+              }
+            }
+        }
+    ],
+    "family": "website-django-worker-prod",
+    "executionRoleArn": "arn:aws:iam::846818632671:role/ecs-website-django-worker-prod-execution",
+    "taskRoleArn": "arn:aws:iam::846818632671:role/ecs-website-django-worker-prod-task",
+    "volumes": [],
+    "requiresAttributes": [
+        {
+            "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+        },
+        {
+            "name": "ecs.capability.execution-role-awslogs"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.ecr-auth"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+        },
+        {
+            "name": "ecs.capability.secrets.asm.environment-variables"
+        },
+        {
+            "name": "ecs.capability.execution-role-ecr-pull"
+        }
+    ],
+    "compatibilities": [
+        "EC2"
+    ]
+}

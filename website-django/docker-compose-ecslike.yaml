@@ -1,0 +1,43 @@
+services:
+
+  django:
+    build:
+      context: .
+      dockerfile: docker/ecs.dockerfile
+    environment:
+      TZ: Pacific/Auckland
+      DEBUG: "false"
+      ALLOWED_HOSTS: "*"
+    working_dir: /app
+    ports:
+      - 8000:8000
+    command: gunicorn --bind 0.0.0.0:8000 website_django.wsgi
+    restart: always
+  worker:
+    build:
+      context: .
+      dockerfile: docker/ecs.dockerfile
+    environment:
+      DJANGO_SETTINGS_MODULE: website_django.settings.worker
+      TZ: Pacific/Auckland
+      DEBUG: "false"
+      ALLOWED_HOSTS: "*"
+    working_dir: /app
+    command: python ./manage.py devrqworker default
+    restart: always
+  redis:
+    image: redis:7.4-alpine
+    environment:
+      TZ: Pacific/Auckland
+  database:
+    image: postgres:17.2-alpine
+    volumes:
+      - pgdata:/var/lib/postgresql/data:rw,z
+    environment:
+      POSTGRES_USER: django
+      POSTGRES_DB: django
+      POSTGRES_PASSWORD: django
+      TZ: Pacific/Auckland
+
+volumes:
+  pgdata:

@@ -1,0 +1,122 @@
+name: "Deploy to ECS"
+on:
+  workflow_dispatch: {}
+  push:
+    branches:
+      - main
+
+jobs:
+  container:
+    name: "Container Build"
+    runs-on: ubuntu-latest
+    environment: 'prod'
+    outputs:
+      image: ${{ steps.login-ecr.outputs.registry }}/website-django:${{ github.sha }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-central-1
+          mask-aws-account-id: no
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build
+        id: build
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          push: true
+          file: docker/ecs.dockerfile
+          platforms: linux/arm64
+          tags: ${{ steps.login-ecr.outputs.registry }}/website-django:${{ github.sha }},${{ steps.login-ecr.outputs.registry }}/website-django:latest
+          cache-from: type=registry,ref=${{ steps.login-ecr.outputs.registry }}/website-django:latest
+          cache-to: type=inline
+
+  prod-wagtail:
+    name: "Deploy Wagtail to Prod"
+    runs-on: ubuntu-latest
+    environment: 'prod'
+    needs: container
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-central-1
+          mask-aws-account-id: no
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Fill in the new image ID in the Amazon ECS task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: ecs/wagtail-task-prod.json
+          container-name: main
+          image:  ${{needs.container.outputs.image}}
+
+      - name: Deploy Amazon ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: website-django-prod
+          cluster: shared
+          wait-for-service-stability: false
+
+  prod-worker:
+    name: "Deploy Worker to Prod"
+    runs-on: ubuntu-latest
+    environment: 'prod'
+    needs: container
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-central-1
+          mask-aws-account-id: no
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Fill in the new image ID in the Amazon ECS task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: ecs/worker-task-prod.json
+          container-name: main
+          image:  ${{needs.container.outputs.image}}
+
+      - name: Deploy Amazon ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: website-django-worker-prod
+          cluster: shared
+          wait-for-service-stability: false

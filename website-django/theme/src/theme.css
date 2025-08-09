@@ -1,0 +1,225 @@
+@import "tailwindcss";
+
+@theme {
+  --color-taskablack: #231F20;
+  --color-taskablue: #E7EAF5;
+  --color-taskacoolgrey: #D0D0CE;
+  --color-taskadarkblue: #00263E;
+  --color-taskagrey: #7C878E;
+  --color-taskabackgroundgrey: #EEEEEE;
+  --color-taskaultralightgrey: #F8F8F8;
+  --color-taskared: #ED1C24;
+  --color-taskacharcoal: #353535;
+  --color-taskawheat: #D6CF8D;
+  --color-taskapink: #E9CDD0;
+  --color-taskavine: #F1EfED;
+  --color-taskasand: #C6B9AC;
+  --color-taskabloom: #625260;
+  --color-duskie: #AEA5A2;
+  --color-greycover: #A7A7A7;
+  --color-whiter: #FFFFFF;
+  --color-aqua: #00788c;
+  --color-charbrown: #2f2f2e;
+  --color-racing: #04594c;
+  --color-seventycx: #5d707f;
+  --color-g2: #4e786f;
+  --color-g2blk: #558279;
+  --color-taskalink: #6d777e;
+  --font-sans: "Sohne";
+  --font-extraleicht: "Sohne-Extraleicht";
+  --font-leicht: "Sohne-Leicht";
+  --font-buch: "Sohne-Buch";
+  --shadow-taska: 8px 8px 30px rgba(0, 0, 0, 0.15); 
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding: 54px; /* offset height of navbar */
+}
+
+@font-face {
+  font-family: 'Sohne-Extraleicht';
+  src: url('../fonts/SohneWeb-Extraleicht.eot');
+  src:
+    url('../fonts/SohneWeb-Extraleicht.woff') format('woff'),
+    url('../fonts/SohneWeb-Extraleicht.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Sohne-Leicht';
+  src: url('../fonts/SohneWeb-Leicht.eot');
+  src:
+    url('../fonts/SohneWeb-Leicht.woff') format('woff'),
+    url('../fonts/SohneWeb-Leicht.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Sohne-Buch';
+  src: url('../fonts/SohneWeb-Buch.eot');
+  src:
+    url('../fonts/SohneWeb-Buch.woff') format('woff'),
+    url('../fonts/SohneWeb-Buch.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Sohne-Buch-Light';
+  src: url('../fonts/SohneWeb-Buch.eot');
+  src:
+    url('../fonts/SohneWeb-Buch.woff') format('woff'),
+    url('../fonts/SohneWeb-Buch.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Sohne-Kraftig';
+  src: url('../fonts/SohneWeb-Kraftig.eot');
+  src:
+    url('../fonts/SohneWeb-Kraftig.woff') format('woff'),
+    url('../fonts/SohneWeb-Kraftig.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+@layer utilities {
+  .h0 {
+    @apply font-extraleicht text-3xl md:text-5xl 2xl:text-6xl;
+  }
+}
+
+@layer utilities {
+  h1,
+  .h1 {
+    @apply font-leicht text-3xl md:text-5xl 2xl:text-6xl;
+  }
+
+  h2,
+  .h2 {
+    @apply font-leicht text-xl md:text-4xl;
+  }
+
+  h3,
+  .h3 {
+    @apply font-leicht text-lg md:text-2xl 2xl:text-3xl;
+  }
+
+  h4,
+  .h4 {
+    @apply font-leicht text-lg md:text-2xl 2xl:text-3xl;
+  }
+
+  h5,
+  .h5 {
+    @apply font-leicht text-base md:text-2xl;
+  }
+
+  h6,
+  .h6 {
+    @apply font-buch text-sm;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+}
+body,
+.p {
+  @apply font-leicht text-sm md:text-lg 2xl:text-xl;
+}
+
+/* The pseudo element has the same content and hover style, so it pre-sets the width of the element and visibility: hidden hides the pseudo element from actual view. */
+p::before {
+  display: block;
+  content: attr(title);
+  font-weight: bold;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+}
+
+@media (min-width: 1024px) {
+  /* Apply to all sizes lg+ */
+  .blend {
+    /* Safari doesn't like tailwinds transparent. So using custom class here */
+    --mask: linear-gradient(to bottom, white 80%, transparent);
+    mask: var(--mask);
+    -webkit-mask: var(--mask);
+  }
+}
+
+ul {
+  @apply list-disc list-inside space-y-1;
+  
+}
+
+ol {
+  @apply list-decimal list-inside space-y-1;
+}
+
+.taska-divider-bottom {
+  @apply divide-y divide-solid divide-taskagrey
+}
+
+.call-to-action > * {
+  @apply pb-2;
+}
+
+.call-to-action p:nth-of-type(2) a {
+  @apply rounded-xl bg-taskacharcoal text-white py-2 px-4 inline-block mt-4 hover:bg-taskablack font-normal hover:no-underline
+}
+
+.call-to-action p:last-child {
+  @apply text-xs
+}
+
+.rotate-enter-from {
+  transform: rotateZ(90deg);
+}
+
+.rotate-enter-active {
+  transition: all 0.5s ease;
+}
+
+.rotate-leave-to,
+.rotate-leave-active {
+  transition: all 0s;
+  opacity: 0;
+}
+
+.expand-enter-active,
+.expand-leave-active {
+  transition: all 0.5s ease;
+  max-height: 1400px; /* required so fade-out works properly */
+}
+.expand-enter-from,
+.expand-leave-to {
+  transition: all 0.5s ease;
+  opacity: 0;
+  max-height: 0px;
+}
+
+.display-block-inner-Footnote {
+  @apply text-xs text-taskagrey
+}
+
+.display-block-inner-Card {
+  @apply bg-taskaultralightgrey md:rounded-3xl md:bg-taskabackgroundgrey md:px-8
+}

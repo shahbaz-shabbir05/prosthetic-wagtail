@@ -1,0 +1,38 @@
+{% load wagtailcore_tags wagtailimages_tags static %}
+<div class="col-span-2 flex justify-center">
+  <div
+    class="flex aspect-[2.9] h-full max-w-screen-2xl flex-col overflow-hidden rounded-3xl md:grid md:grid-cols-2"
+  >
+    <picture>
+      <source
+        srcset="{{ child.header_image.file.url }}?width=1280"
+        media="(max-width: 1280px)"
+      />
+      <img
+        alt="{{ child.header_image.contextual_alt_text }}"
+        src="{{ child.header_image.file.url }}"
+        height="{{ child.header_image.height }}"
+        width="{{ child.header_image.width }}"
+        class="max-h-[720px] min-h-full w-full object-cover"
+      />
+    </picture>
+    <div
+      class="flex flex-col space-y-4 bg-white px-6 text-center md:justify-center md:px-12 md:py-6 md:text-left"
+    >
+      <h2>{{ child.title }}</h2>
+      <h6>{{ child.date }}</h6>
+      <p>{{ child.content.0|truncatechars:250 }}</p>
+      <div class="flex flex-col items-end justify-between">
+        <a href="{{ child.url }}" class="h-12">
+          <img
+            height="34"
+            width="34"
+            alt="scroll-down-arrow"
+            src="{% static 'img/scroll-down-arrow-black.svg' %}"
+            class="h-full -rotate-90 overflow-hidden rounded-3xl border border-current p-2 transition duration-200 hover:bg-taskablue"
+          />
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

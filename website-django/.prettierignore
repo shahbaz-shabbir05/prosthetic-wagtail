@@ -1,0 +1,3 @@
+!static_build
+static_build/static/admin
+static_build/static/wagtail*

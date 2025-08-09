@@ -1,0 +1,34 @@
+- [ ] Resource page filter menu needs to be translated. Not sure how to do that yet.
+- [ ] cards.ProductCard.new - rename?
+- [ ] FullScreenImageWithTextOver - show_button and text_on_left - are they required?
+- [ ] LinkButton.display_text - should this be text instead of char?
+- [ ] Check links in RichTextField
+- [ ] Check line breaks in RichTextField
+- [ ] Mobile widgets
+- [ ] Crowdin handle pagination
+- [ ] SideBySide and FiftyFifty are almost the same widget
+- [ ] Add blockquote to richtextfield
+- [ ] Add better logic for including classes in tailwind output. Right now, when adding classes to elements, especially on the Django side, we need to make sure they're also mentioned explicitly in one of templates (see website/home_page.html for example). This isn't intuitive
+- [ ] The page_header block isn't really a block anymore, so the template should be renamed.
+- [ ] Make header image required
+- [ ] Why do we have hidden pages?
+- [ ] In templates/widgets/display_inner.html, where we interpolate the number of columns, it seems that tailwind isn't compiling the correct class.
+- [ ] History page, determine position of text...
+- [ ] select display model may need title removed
+- [ ] select display block needs work - there are two or three levels of headings to consider
+- [ ] should 50/50 be full screen?  
+- [ ] check out the footer on the research page
+- [ ] Do I need a customisable page title? Or do we deal with slug redirects separately (see management team)
+- [ ] Improve the blog_overview_page template!!
+- [ ] image block
+- [ ] template best practices
+- [ ] there is a rendering error when the champion text includes a link in the first few chars. MAYBE I can just use marksafe when rendering
+- [x] Set up a prod environment (probably the only env we actually need)
+- [ ] Cookie banner
+- [ ] Special navigation for the product pages
+- [ ] Add oAuth for admin backend
+- [x] Fix django bakery install
+- [ ] Use JS parsing for dates - since we're going to use static builds, we don't know ahead of time if a user has en_US or en_NZ locale set, so we need to use JS to dynamically display the correct date format in templates.
+- [ ] Improve blog_overview_header.html, use of truncatechars - we need to strip linebreaks first before we can truncate the text.
+- [ ] Review and fix the custom link handler - it doesn't look good on all pages because of the font color
+- [ ] Keep working on the full screen image with text over. I've set it up so that it has a heading text (rendered h1-like) and a body text. The body text should really just be a text field (rather than richtext) to remove custom styling. The widget is used on the home page (works great), but also at the bottom of the research page. It doesn't work great there because of how it was set up in the old CMS.

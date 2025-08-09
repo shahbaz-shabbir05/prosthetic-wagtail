@@ -1,0 +1,39 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+<div
+  class="{% if value.image_on_left %}md:flex-row-reverse flex-col-reverse{% endif %} flex flex-col md:flex-row"
+>
+  <div
+    class="bg-{{ value.bg_color }} text-{{ value.text_color }} {% if value.image_on_left %}
+      items-start md6:pr-24
+    {% else %}
+      items-end md:pl-24
+    {% endif %} flex flex-col justify-center gap-8 p-8 md:w-1/2 md:p-0 md:py-24"
+  >
+    <div
+      class="{% if value.image_on_left %}md:pl-24{% else %}md:pr-24{% endif %} flex w-full max-w-screen-md flex-col text-center md:text-left"
+    >
+      {{ value.text|richtext }}
+      <div class="mt-8" >{% include_block value.button.0 %}</div>
+    </div>
+
+  </div>
+
+  <div class="flex md:w-1/2">
+    <picture
+      class="max-h-[100vh] min-h-full w-full object-cover min-[2148px]:max-h-[50vh]"
+    >
+      <source
+        srcset="{{ value.image.file.url }}?width=1280"
+        media="(max-width: 1280px)"
+      />
+      <img
+        alt=""
+        src="{{ value.image.file.url }}"
+        height="{{ value.image.height }}"
+        width="{{ value.image.width }}"
+        class="h-full w-full object-cover"
+      />
+    </picture>
+  </div>
+</div>

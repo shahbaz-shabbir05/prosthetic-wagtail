@@ -1,0 +1,13 @@
+{% load static %}
+
+<div class="hidden h-12 md:block">
+  <a :href="`#${componentId + 1}`" class="scroll-smooth">
+    <img
+      height="34"
+      width="34"
+      src="{% static 'img/scroll-down-arrow-pink.svg' %}"
+      alt="scroll-down-arrow"
+      class="border-taskapink hover:bg-taskagrey h-full overflow-hidden rounded-3xl border p-2 transition duration-200"
+    />
+  </a>
+</div>

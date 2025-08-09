@@ -1,0 +1,67 @@
+services:
+
+  django:
+    build:
+      context: .
+      dockerfile: docker/django.dockerfile
+    volumes:
+      - .:/app
+      - poetry-cache:/.cache/pypoetry
+    environment:
+      POETRY_CACHE_DIR: /.cache/pypoetry
+      TZ: Pacific/Auckland
+    working_dir: /app
+    ports:
+      - 8000:8000
+    command: run python ./manage.py runserver 0.0.0.0:8000
+    restart: always
+  worker:
+    build:
+      context: .
+      dockerfile: docker/django.dockerfile
+    volumes:
+      - .:/app
+      - poetry-cache-worker:/.cache/pypoetry
+    environment:
+      POETRY_CACHE_DIR: /.cache/pypoetry
+      DJANGO_SETTINGS_MODULE: website_django.settings.worker
+      TZ: Pacific/Auckland
+    working_dir: /app
+    command: run python ./manage.py devrqworker default
+    restart: always
+  tailwind:
+    image: node:22-alpine
+    working_dir: /app
+    volumes:
+      - .:/app
+      - npm-cache:/root/.npm
+    command: sh -c 'npm install; npm run watch'
+    tty: true
+    environment:
+      TZ: Pacific/Auckland
+  redis:
+    image: redis:7.4-alpine
+    environment:
+      TZ: Pacific/Auckland
+  database:
+    image: postgres:17.2-alpine
+    volumes:
+      - pgdata:/var/lib/postgresql/data:rw,z
+    environment:
+      POSTGRES_USER: django
+      POSTGRES_DB: django
+      POSTGRES_PASSWORD: django
+      TZ: Pacific/Auckland
+  static:
+    image: jitesoft/lighttpd
+    volumes:
+      - .:/app
+    ports:
+      - 8001:80
+    command: lighttpd -D -f /app/docker/lighttpd/lighttpd.conf
+
+volumes:
+  poetry-cache:
+  poetry-cache-worker:
+  npm-cache:
+  pgdata:

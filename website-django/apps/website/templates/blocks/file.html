@@ -1,0 +1,42 @@
+{% load static taska_tags %}
+<li class="flex justify-between py-6" x-show="showForCategories(userCategory, {{ value.category }}) && (fileCategory == null || fileCategory == '{{ value.file_type }}')">
+  <div class="flex gap-4">
+    <img
+      src="{% static value|download_icon %}"
+      width="32"
+      height="32"
+      alt="Document icon"
+    />
+    <div class="flex flex-col">
+      {% if value.url %}
+      <a class="h5" href="{{ value.url }}" target="_blank"
+        >{{ value.title }}</a
+      >
+      {% else %}
+      <a class="h5" href="{{ value.file.url }}" target="_blank"
+        >{{ value.title }}</a
+      >
+      {% endif %}
+      <p class="text-xs text-taskagrey">
+        {% if not value.url %}
+        {% bytes_to_mb value.file.file_size %}
+        {% endif %}
+      </p>
+    </div>
+  </div>
+
+  <div class="flex items-center gap-4">
+    {% if value.url %}
+    <a href="{{ value.url }}" target="_blank">
+    {% else %}
+    <a href="{{ value.file.url }}" target="_blank">
+    {% endif %}
+      <img
+        src="{% static 'img/download.svg' %}"
+        height="24"
+        width="24"
+        class="min-w-[24px] hover:cursor-pointer"
+        alt="Download Icon"
+    /></a>
+  </div>
+</li>

@@ -1,0 +1,84 @@
+<div class="my-[2rem] w-full text-center" x-data="loading">
+  <div x-cloak x-show="show" class="lds-ring">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+
+  <div id="__enzuzo-root-privacy"></div>
+</div>
+
+{% block extra_js %}
+  <script
+    id="__enzuzo-root-script"
+    src="https://app.enzuzo.com/__enzuzo-privacy-app.js?mode=privacy&apiHost=https://app.enzuzo.com&qt=1723362745217&referral=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDdXN0b21lcklEIjoyMzQ3MCwiQ3VzdG9tZXJOYW1lIjoiY3VzdC1TVlJZVDhncSIsIkN1c3RvbWVyTG9nb1VSTCI6IiIsIlJvbGVzIjpbInJlZmVycmFsIl0sIlByb2R1Y3QiOiJlbnRlcnByaXNlIiwiVmVyc2lvbiI6MCwiaXNzIjoiRW56dXpvIEluYy4iLCJuYmYiOjE3MjMzNjI3MTR9.U-vyGkvPiTFiLWctFXx01Uhd0Ui1QkzP7KJXZvbtLeI"
+    defer
+    async
+  ></script>
+
+  <script>
+    // Disable all debug logging because enzuzo makes ample use of it.
+    console.debug = () => {};
+
+    let alRef;
+    document.addEventListener('alpine:init', () => {
+      const data = Alpine.data('loading', () => ({
+        show: true,
+
+        init() {
+          alRef = this;
+        },
+      }));
+
+      const _observer = new MutationObserver((config, observer) => {
+        alRef.show = false;
+        observer.disconnect();
+      });
+
+      _observer.observe(document.getElementById('__enzuzo-root-privacy'), {
+        childList: true,
+      });
+    });
+  </script>
+{% endblock extra_js %}
+
+{% block extra_head %}
+  <style>
+    .lds-ring {
+      display: inline-block;
+      position: relative;
+      width: 80px;
+      height: 80px;
+    }
+    .lds-ring div {
+      box-sizing: border-box;
+      display: block;
+      position: absolute;
+      width: 64px;
+      height: 64px;
+      margin: 8px;
+      border: 8px solid rgb(0, 38, 62);
+      border-radius: 50%;
+      animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+      border-color: rgb(0, 38, 62) transparent transparent transparent;
+    }
+    .lds-ring div:nth-child(1) {
+      animation-delay: -0.45s;
+    }
+    .lds-ring div:nth-child(2) {
+      animation-delay: -0.3s;
+    }
+    .lds-ring div:nth-child(3) {
+      animation-delay: -0.15s;
+    }
+    @keyframes lds-ring {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+{% endblock extra_head %}

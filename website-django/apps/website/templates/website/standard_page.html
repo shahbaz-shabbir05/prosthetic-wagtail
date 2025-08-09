@@ -1,0 +1,8 @@
+{% extends "website/home_page.html" %}
+{% load wagtailcore_tags wagtailimages_tags static %}
+{% block content %}
+  {% include "blocks/page_header.html" %}
+    {% for blk in page.content %}
+        {% include_block blk %}
+    {% endfor %}
+{% endblock content %}

@@ -1,0 +1,36 @@
+{% load wagtailcore_tags %}
+
+<script>
+  function showForCategories(selectedCategory, categories) {
+    return (
+      selectedCategory == null || categories.indexOf(selectedCategory) != -1
+    );
+  }
+
+  function visible_children(el) {
+    var count = 0;
+    for (child of el.children) {
+      if (child.style['display'] != 'none') {
+        count++;
+      }
+    }
+    return count;
+  }
+</script>
+
+<div class="mt-16 flex justify-center bg-white">
+  <div
+    class="mx-8 flex w-full max-w-screen-lg flex-col md:flex-row md:space-x-12 lg:mx-24 xl:max-w-screen-2xl"
+    x-data="{ userCategory: 'user', fileCategory: null }"
+  >
+    <div class="pb-8 md:w-96 md:pb-0">
+      {% include 'widgets/download_filter.html' %}
+    </div>
+
+    <div class="flex w-full flex-col gap-8">
+      {% for category in value.categories %}
+        {% include_block category %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
