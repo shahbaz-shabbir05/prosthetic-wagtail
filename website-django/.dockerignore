@@ -1,6 +1,0 @@
-.mypy_cache/
-.pytest_cache/
-.vscode/
-docker/
-node_modules/
-terraform/
